@@ -8,4 +8,5 @@ package crawlers;
  * To change this template use File | Settings | File Templates.
  */
 public interface CrawlerInterface {
+    void startCrawling(CrawlerAuthProps autoProps, CrawlerStorageProps storageProps);
 }
