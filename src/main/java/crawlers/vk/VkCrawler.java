@@ -109,10 +109,11 @@ public class VkCrawler implements CrawlerInterface {
             session.beginTransaction();
 
             DBDialogsEntity dialogsEntity = new DBDialogsEntity();
+            dialogsEntity.setSourceType(1);
             session.save(dialogsEntity);
 
             for (VkCrawlerGetDialogsMessage message : messages) {
-                DBUsersEntity usersEntity = getUserByIID(message.from_id);
+                DBUsersEntity usersEntity = HibernateUtils.getUserByIID(message.from_id, 1);
 
                 DBMessagesEntity messagesEntity = new DBMessagesEntity();
                 messagesEntity.setAuthor(usersEntity);
@@ -123,24 +124,6 @@ public class VkCrawler implements CrawlerInterface {
             }
             session.getTransaction().commit();
             session.close();
-        }
-
-        DBUsersEntity getUserByIID(int iid) {
-            Session session = HibernateUtils.getSessionFactory().openSession();
-            session.beginTransaction();
-
-            Query query = session.createQuery("from DBUsersEntity where iid = :iid").setInteger("iid", iid);
-            DBUsersEntity usersEntity = (DBUsersEntity)query.uniqueResult();
-            if (usersEntity == null) {
-                usersEntity = new DBUsersEntity();
-                usersEntity.setIid(iid);
-                session.save(usersEntity);
-            }
-
-            session.getTransaction().commit();
-            session.close();
-
-            return usersEntity;
         }
 
         VkCrawlerGetDialogsEntity doGetDialogs(int offset, int count, int bodyLength) throws URISyntaxException, IOException, HttpException {

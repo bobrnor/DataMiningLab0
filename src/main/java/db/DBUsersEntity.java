@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Entity
 public class DBUsersEntity {
     private int id;
+    private int source_type;
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @javax.persistence.Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
@@ -35,6 +36,16 @@ public class DBUsersEntity {
 
     public void setIid(int iid) {
         this.iid = iid;
+    }
+
+    @javax.persistence.Column(name = "source_type", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+    @Basic
+    public int getSourceType() {
+        return source_type;
+    }
+
+    public void setSourceType(int source_type) {
+        this.source_type = source_type;
     }
 
     @Override
