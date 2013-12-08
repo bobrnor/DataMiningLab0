@@ -15,6 +15,7 @@ import java.util.Set;
 @Entity
 public class DBDialogsEntity {
     private int id;
+    private int source_type;
     private Set<DBTagsEntity> tags;
     private List<DBMessagesEntity> messages;
 
@@ -27,6 +28,16 @@ public class DBDialogsEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @javax.persistence.Column(name = "source_type", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+    @Basic
+    public int getSourceType() {
+        return source_type;
+    }
+
+    public void setSourceType(int source_type) {
+        this.source_type = source_type;
     }
 
     @Override

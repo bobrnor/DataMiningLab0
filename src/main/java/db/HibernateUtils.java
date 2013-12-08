@@ -1,5 +1,7 @@
 package db;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
@@ -29,5 +31,26 @@ public class HibernateUtils {
 
     public static SessionFactory getSessionFactory() {
         return m_sessionFactory;
+    }
+
+    public static DBUsersEntity getUserByIID(int iid, int sourceType) {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        session.beginTransaction();
+
+        Query query = session.createQuery("from DBUsersEntity where iid = :iid and sourceType = :sourceType")
+                .setInteger("iid", iid)
+                .setInteger("sourceType", sourceType);
+        DBUsersEntity usersEntity = (DBUsersEntity)query.uniqueResult();
+        if (usersEntity == null) {
+            usersEntity = new DBUsersEntity();
+            usersEntity.setIid(iid);
+            usersEntity.setId(sourceType);
+            session.save(usersEntity);
+        }
+
+        session.getTransaction().commit();
+        session.close();
+
+        return usersEntity;
     }
 }
