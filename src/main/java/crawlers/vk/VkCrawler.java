@@ -3,23 +3,28 @@ package crawlers.vk;
 import crawlers.CrawlerAuthProps;
 import crawlers.CrawlerInterface;
 import crawlers.CrawlerStorageProps;
+import db.DBDialogsEntity;
+import db.DBMessagesEntity;
+import db.DBUsersEntity;
+import db.HibernateUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;
-import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.URISyntaxException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,9 +35,9 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class VkCrawler implements CrawlerInterface {
-    static String kApiPath = "https://api.vk.com/method";
-    static String kGetDialogsMethodFormat = "%s/messages.getDialogs?access_token=%s&v=%s&offset=%d&count=%d&preview_length=%d";
-    static String kGetHistoryMethodFormat = "%s/messages.getHistory?access_token=%s&v=%s&offset=%d&count=%d&user_id=%d";
+    private static final String kApiPath = "https://api.vk.com/method";
+    private static final String kGetDialogsMethodFormat = "%s/messages.getDialogs?access_token=%s&v=%s&offset=%d&count=%d&preview_length=%d";
+    private static final String kGetHistoryMethodFormat = "%s/messages.getHistory?access_token=%s&v=%s&offset=%d&count=%d&user_id=%d";
 
     CrawlerAuthProps m_authProps;
     CrawlerStorageProps m_storageProps;
@@ -99,6 +104,43 @@ public class VkCrawler implements CrawlerInterface {
                 vkEntity = doGetHistory(i, 200, userId);
                 messages.addAll(vkEntity.response.items);
             }
+
+            Session session = HibernateUtils.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            DBDialogsEntity dialogsEntity = new DBDialogsEntity();
+            session.save(dialogsEntity);
+
+            for (VkCrawlerGetDialogsMessage message : messages) {
+                DBUsersEntity usersEntity = getUserByIID(message.from_id);
+
+                DBMessagesEntity messagesEntity = new DBMessagesEntity();
+                messagesEntity.setAuthor(usersEntity);
+                messagesEntity.setBody(message.body);
+                messagesEntity.setDate(new Timestamp(message.date));
+                messagesEntity.setDialog(dialogsEntity);
+                session.persist(messagesEntity);
+            }
+            session.getTransaction().commit();
+            session.close();
+        }
+
+        DBUsersEntity getUserByIID(int iid) {
+            Session session = HibernateUtils.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            Query query = session.createQuery("from DBUsersEntity where iid = :iid").setInteger("iid", iid);
+            DBUsersEntity usersEntity = (DBUsersEntity)query.uniqueResult();
+            if (usersEntity == null) {
+                usersEntity = new DBUsersEntity();
+                usersEntity.setIid(iid);
+                session.save(usersEntity);
+            }
+
+            session.getTransaction().commit();
+            session.close();
+
+            return usersEntity;
         }
 
         VkCrawlerGetDialogsEntity doGetDialogs(int offset, int count, int bodyLength) throws URISyntaxException, IOException, HttpException {
