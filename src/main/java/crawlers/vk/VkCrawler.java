@@ -117,7 +117,7 @@ public class VkCrawler implements CrawlerInterface {
                 DBMessagesEntity messagesEntity = new DBMessagesEntity();
                 messagesEntity.setAuthor(usersEntity);
                 messagesEntity.setBody(message.body);
-                messagesEntity.setDate(new Timestamp(message.date));
+                messagesEntity.setDate(new Timestamp((long)message.date * 1000));
                 messagesEntity.setDialog(dialogsEntity);
                 session.persist(messagesEntity);
             }
