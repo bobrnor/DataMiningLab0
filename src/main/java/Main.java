@@ -1,5 +1,7 @@
 import crawlers.CrawlerAuthProps;
+import crawlers.auths.TwiAuth;
 import crawlers.auths.VkAuth;
+import crawlers.twi.TwiCrawler;
 import crawlers.vk.VkCrawler;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
@@ -41,15 +43,20 @@ public class Main {
 
     public static void main(final String[] args) throws Exception {
 
-        VkAuth vkAuth = new VkAuth();
-        CrawlerAuthProps authProps = vkAuth.auth("4016574", "2QWebF0E6PSEtg7GyZD8", "friends,messages");
+//        VkAuth vkAuth = new VkAuth();
+        TwiAuth twiAuth = new TwiAuth();
+//        CrawlerAuthProps authProps = vkAuth.auth("4016574", "2QWebF0E6PSEtg7GyZD8", "friends,messages");
+        CrawlerAuthProps authProps = twiAuth.auth("jFxAP2VXOEokO2eI9k3azQ", "SOhBDSc3DU3OJvGnH8JGOQ83jMZxvkpWy6In7EY48", "");
 
-        VkCrawler crawler = new VkCrawler();
+//        VkCrawler crawler = new VkCrawler();
+//        crawler.startCrawling(authProps, null);
+
+        TwiCrawler crawler = new TwiCrawler();
         crawler.startCrawling(authProps, null);
 
-        while (true) {
-            Thread.sleep(1000);
-        }
+//        while (true) {
+//            Thread.sleep(1000);
+//        }
 
 //        final Session session = getSession();
 //        try {
