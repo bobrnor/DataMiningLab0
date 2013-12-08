@@ -5,6 +5,8 @@ import crawlers.vk.VkCrawler;
 import db.HibernateUtils;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import lsa.LSANormilizer;
+import lsa.LSAStemmer;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
@@ -30,14 +32,17 @@ public class Main extends Application implements VkAuthListener {
 
     @Override
     public void start(Stage stage) throws Exception {
-        VkAuth vkAuth = new VkAuth(stage, "4016574", "2QWebF0E6PSEtg7GyZD8", "friends,messages", this);
-        vkAuth.auth();
+//        VkAuth vkAuth = new VkAuth(stage, "4016574", "2QWebF0E6PSEtg7GyZD8", "friends,messages", this);
+//        vkAuth.auth();
+
+        LSANormilizer normilizer = new LSANormilizer();
+        normilizer.startNormalizing();
     }
 
     @Override
     public void authSucceded(CrawlerAuthProps authProps) {
-        VkCrawler crawler = new VkCrawler();
-        crawler.startCrawling(authProps, null);
+//        VkCrawler crawler = new VkCrawler();
+//        crawler.startCrawling(authProps, null);
     }
 
     @Override
