@@ -2,6 +2,7 @@ import crawlers.CrawlerAuthProps;
 import crawlers.auths.VkAuth;
 import crawlers.auths.VkAuthListener;
 import crawlers.vk.VkCrawler;
+import db.HibernateUtils;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.hibernate.HibernateException;
