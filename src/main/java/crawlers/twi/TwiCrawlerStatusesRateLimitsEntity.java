@@ -5,6 +5,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TwiCrawlerStatusesRateLimitsEntity {
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class RateEntity {
         public Long remaining;
         public Long reset;

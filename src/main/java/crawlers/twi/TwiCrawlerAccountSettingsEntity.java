@@ -7,18 +7,21 @@ import java.util.ArrayList;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TwiCrawlerAccountSettingsEntity {
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class SleepTimeInfo {
         public Boolean enabled;
         public String end_time;
         public String start_time;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class TimeZoneInfo {
         public String name;
         public String tzinfo_name;
         public Integer utc_offset;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class TrendLocationInfo {
         public static class PlaceTypeInfo {
             public Integer code;

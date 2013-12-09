@@ -7,12 +7,14 @@ import java.util.ArrayList;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TwiCrawlerGetTimelineTweet {
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Contributor {
         public Long id;
         public String id_str;
         public String screen_name;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Coordinates {
         public ArrayList<Double> coordinates;
 
@@ -20,6 +22,7 @@ public class TwiCrawlerGetTimelineTweet {
         public String type_name;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class TweetID {
         public Long id;
         public String id_str;
