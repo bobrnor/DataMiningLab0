@@ -5,9 +5,6 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.ArrayList;
 
-/**
- * Created by pavel on 08/12/13.
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TwiCrawlerUserEntity {
     public Boolean contributors_enabled;

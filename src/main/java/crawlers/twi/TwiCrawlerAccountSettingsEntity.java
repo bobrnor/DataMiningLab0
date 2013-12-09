@@ -5,6 +5,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.ArrayList;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TwiCrawlerAccountSettingsEntity {
     public static class SleepTimeInfo {
         public Boolean enabled;
