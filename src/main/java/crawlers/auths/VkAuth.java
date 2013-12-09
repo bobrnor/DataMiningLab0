@@ -41,7 +41,7 @@ public class VkAuth implements OAuthWebHelperListener {
     }
 
     @Override
-    public void authCodeRecieved(String code) {
+    public void authCodeReceived(String code) {
         Verifier verifier = new Verifier(code);
         Token accessToken = m_service.getAccessToken(null, verifier);
 

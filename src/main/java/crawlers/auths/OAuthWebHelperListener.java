@@ -8,5 +8,5 @@ package crawlers.auths;
  * To change this template use File | Settings | File Templates.
  */
 public interface OAuthWebHelperListener {
-    public void authCodeRecieved(String code);
+    public void authCodeReceived(String code);
 }

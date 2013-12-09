@@ -11,5 +11,5 @@ import crawlers.CrawlerAuthProps;
  */
 public interface VkAuthListener {
     public void authSucceded(CrawlerAuthProps authProps);
-    public void authFiled();
+    public void authFailed();
 }

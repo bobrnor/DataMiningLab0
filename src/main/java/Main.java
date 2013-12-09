@@ -1,7 +1,10 @@
 import crawlers.CrawlerAuthProps;
+import crawlers.TwiCrawlerAuthProps;
 import crawlers.auths.TwiAuth;
+import crawlers.auths.TwiAuthListener;
 import crawlers.auths.VkAuth;
 import crawlers.auths.VkAuthListener;
+import crawlers.twi.TwiCrawler;
 import crawlers.vk.VkCrawler;
 import db.HibernateUtils;
 import javafx.application.Application;
@@ -26,7 +29,9 @@ import java.util.Map;
  * Time: 12:00
  * To change this template use File | Settings | File Templates.
  */
-public class Main extends Application implements VkAuthListener {
+public class Main extends Application implements VkAuthListener, TwiAuthListener {
+    CrawlerAuthProps m_vkAuthProps;
+
     public static void main(final String[] args) throws Exception {
         launch(args);
     }
@@ -35,6 +40,8 @@ public class Main extends Application implements VkAuthListener {
 
     @Override
     public void start(Stage stage) throws Exception {
+        m_vkAuthProps = null;
+
         VkAuth vkAuth = new VkAuth(stage, "4016574", "2QWebF0E6PSEtg7GyZD8", "friends,messages", this);
         vkAuth.auth();
 
@@ -44,12 +51,28 @@ public class Main extends Application implements VkAuthListener {
 
     @Override
     public void authSucceded(CrawlerAuthProps authProps) {
-        VkCrawler crawler = new VkCrawler();
-        crawler.startCrawling(authProps, null);
+        m_vkAuthProps = authProps;
+
+        TwiAuth twiAuth = new TwiAuth(new Stage(), "jFxAP2VXOEokO2eI9k3azQ", "SOhBDSc3DU3OJvGnH8JGOQ83jMZxvkpWy6In7EY48", "", this);
+        twiAuth.auth();
     }
 
     @Override
-    public void authFiled() {
+    public void authFailed() {
+
+    }
+
+    @Override
+    public void twiAuthSucceeded(TwiCrawlerAuthProps twiAuthProps) {
+        VkCrawler vkCrawler = new VkCrawler();
+        vkCrawler.startCrawling(m_vkAuthProps, null);
+
+        TwiCrawler twiCrawler = new TwiCrawler();
+        twiCrawler.startCrawling(twiAuthProps, null);
+    }
+
+    @Override
+    public void twiAuthFailed() {
 
     }
 }

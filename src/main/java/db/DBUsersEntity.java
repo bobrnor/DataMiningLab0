@@ -26,15 +26,15 @@ public class DBUsersEntity {
         this.id = id;
     }
 
-    private int iid;
+    private long iid;
 
     @javax.persistence.Column(name = "iid", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
     @Basic
-    public int getIid() {
+    public long getIid() {
         return iid;
     }
 
-    public void setIid(int iid) {
+    public void setIid(long iid) {
         this.iid = iid;
     }
 
@@ -57,6 +57,7 @@ public class DBUsersEntity {
 
         if (id != that.id) return false;
         if (iid != that.iid) return false;
+        if (source_type != that.source_type) return false;
 
         return true;
     }
@@ -64,7 +65,8 @@ public class DBUsersEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + iid;
+        result = 31 * result + source_type;
+        result = 31 * result + (int) (iid ^ (iid >>> 32));
         return result;
     }
 }

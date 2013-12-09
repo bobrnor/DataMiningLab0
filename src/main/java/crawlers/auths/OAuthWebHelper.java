@@ -42,7 +42,7 @@ public class OAuthWebHelper {
 
                     if (url != null && url.getRef() != null) {
                         String[] strings = url.getRef().split("=");
-                        m_listener.authCodeRecieved(strings[1]);
+                        m_listener.authCodeReceived(strings[1]);
                     }
                 }
             }

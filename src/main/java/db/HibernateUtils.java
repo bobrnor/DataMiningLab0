@@ -33,18 +33,18 @@ public class HibernateUtils {
         return m_sessionFactory;
     }
 
-    public static DBUsersEntity getUserByIID(int iid, int sourceType) {
+    public static DBUsersEntity getUserByIID(long iid, int sourceType) {
         Session session = HibernateUtils.getSessionFactory().openSession();
         session.beginTransaction();
 
         Query query = session.createQuery("from DBUsersEntity where iid = :iid and sourceType = :sourceType")
-                .setInteger("iid", iid)
+                .setLong("iid", iid)
                 .setInteger("sourceType", sourceType);
         DBUsersEntity usersEntity = (DBUsersEntity)query.uniqueResult();
         if (usersEntity == null) {
             usersEntity = new DBUsersEntity();
             usersEntity.setIid(iid);
-            usersEntity.setId(sourceType);
+            usersEntity.setSourceType(sourceType);
             session.save(usersEntity);
         }
 

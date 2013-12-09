@@ -1,6 +1,7 @@
 package crawlers.auths;
 
 import crawlers.TwiCrawlerAuthProps;
+import javafx.stage.Stage;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.TwitterApi;
 import org.scribe.model.*;
@@ -15,36 +16,41 @@ import java.util.Scanner;
  * Time: 13:08
  * To change this template use File | Settings | File Templates.
  */
-public class TwiAuth {
+public class TwiAuth implements OAuthWebHelperListener {
+    private Stage m_stage;
+    private OAuthService m_service;
+    private TwiAuthListener m_listener;
+    private Token m_requestToken;
 
-    public TwiCrawlerAuthProps auth(String appId, String apiSecret, String permissions) {
-
-        OAuthService service = new ServiceBuilder()
+    public TwiAuth(Stage stage, String appId, String apiSecret, String permissions, TwiAuthListener listener) {
+        m_stage = stage;
+        m_service = new ServiceBuilder()
                 .provider(TwitterApi.class)
                 .apiKey(appId)
                 .apiSecret(apiSecret)
+                .callback("oob")
                 .build();
+        m_listener = listener;
+        m_requestToken = null;
+    }
 
-        Scanner in = new Scanner(System.in);
+    public void auth() {
+        m_requestToken = m_service.getRequestToken();
+        String authorizationUrl = m_service.getAuthorizationUrl(m_requestToken);
 
-        System.out.println("=== Twi's OAuth Workflow ===");
-        System.out.println();
-        System.out.println("Getting the request token...");
-        Token requestToken = service.getRequestToken();
-        System.out.println("Fetching the Authorization URL...");
-        String authorizationUrl = service.getAuthorizationUrl(requestToken);
-        System.out.println("Got the Authorization URL!");
-        System.out.println("Now go and authorize Scribe here:");
-        System.out.println(authorizationUrl);
-        System.out.println("And paste the authorization code here");
-        System.out.print(">>");
-        Verifier verifier = new Verifier(in.nextLine());
-        Token accessToken = service.getAccessToken(requestToken, verifier);
+        TwiOAuthWebHelper oauthHelper = new TwiOAuthWebHelper(m_stage, this);
+        oauthHelper.auth("Twi Pin OAuth", authorizationUrl);
+    }
+
+    @Override
+    public void authCodeReceived(String code) {
+        Verifier verifier = new Verifier(code);
+        Token accessToken = m_service.getAccessToken(m_requestToken, verifier);
 
         TwiCrawlerAuthProps authProps = new TwiCrawlerAuthProps();
-        authProps.setAuthService(service);
+        authProps.setAuthService(m_service);
         authProps.setToken(accessToken);
-
-        return authProps;
+        m_listener.twiAuthSucceeded(authProps);
+        m_stage.close();
     }
 }
