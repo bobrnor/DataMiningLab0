@@ -37,11 +37,11 @@ public class TwiOAuthWebHelper {
 
         final TextField textField = new TextField();
         textField.setPromptText("Enter Auth Pin Code");
-//        textField.setEditable(false);
+        textField.setEditable(false);
 
         final Button button = new Button("Accept pin");
         button.setPrefSize(100, 20);
-//        button.setDisable(true);
+        button.setDisable(true);
 
         Label label = new Label("Pin:");
 
@@ -51,8 +51,8 @@ public class TwiOAuthWebHelper {
             public void changed(ObservableValue<? extends Worker.State> observableValue, Worker.State oldState, Worker.State newState) {
                 String location = webView.getEngine().getLocation();
                 if (newState == Worker.State.SUCCEEDED && location.contentEquals("https://api.twitter.com/oauth/authorize")) {
-//                    button.setDisable(false);
-//                    textField.setEditable(true);
+                    button.setDisable(false);
+                    textField.setEditable(true);
                 }
             }
         });

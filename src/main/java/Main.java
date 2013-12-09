@@ -36,28 +36,23 @@ public class Main extends Application implements VkAuthListener, TwiAuthListener
         launch(args);
     }
 
-    //CrawlerAuthProps authProps = twiAuth.auth("jFxAP2VXOEokO2eI9k3azQ", "SOhBDSc3DU3OJvGnH8JGOQ83jMZxvkpWy6In7EY48", "");
-
     @Override
     public void start(Stage stage) throws Exception {
         m_vkAuthProps = null;
 
-//        VkAuth vkAuth = new VkAuth(stage, "4016574", "2QWebF0E6PSEtg7GyZD8", "friends,messages", this);
-//        vkAuth.auth();
+        VkAuth vkAuth = new VkAuth(stage, "4016574", "2QWebF0E6PSEtg7GyZD8", "friends,messages", this);
+        vkAuth.auth();
 
-//        LSANormilizer normilizer = new LSANormilizer();
-//        normilizer.startNormalizing();
-
-        TwiAuth twiAuth = new TwiAuth(new Stage(), "jFxAP2VXOEokO2eI9k3azQ", "SOhBDSc3DU3OJvGnH8JGOQ83jMZxvkpWy6In7EY48", "", this);
-        twiAuth.auth();
+        LSANormilizer normilizer = new LSANormilizer();
+        normilizer.startNormalizing();
     }
 
     @Override
     public void authSucceded(CrawlerAuthProps authProps) {
         m_vkAuthProps = authProps;
 
-//        TwiAuth twiAuth = new TwiAuth(new Stage(), "jFxAP2VXOEokO2eI9k3azQ", "SOhBDSc3DU3OJvGnH8JGOQ83jMZxvkpWy6In7EY48", "", this);
-//        twiAuth.auth();
+        TwiAuth twiAuth = new TwiAuth(new Stage(), "jFxAP2VXOEokO2eI9k3azQ", "SOhBDSc3DU3OJvGnH8JGOQ83jMZxvkpWy6In7EY48", "", this);
+        twiAuth.auth();
     }
 
     @Override
@@ -67,8 +62,8 @@ public class Main extends Application implements VkAuthListener, TwiAuthListener
 
     @Override
     public void twiAuthSucceeded(TwiCrawlerAuthProps twiAuthProps) {
-//        VkCrawler vkCrawler = new VkCrawler();
-//        vkCrawler.startCrawling(m_vkAuthProps, null);
+        VkCrawler vkCrawler = new VkCrawler();
+        vkCrawler.startCrawling(m_vkAuthProps, null);
 
         TwiCrawler twiCrawler = new TwiCrawler();
         twiCrawler.startCrawling(twiAuthProps, null);

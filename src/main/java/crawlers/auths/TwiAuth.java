@@ -25,10 +25,9 @@ public class TwiAuth implements OAuthWebHelperListener {
     public TwiAuth(Stage stage, String appId, String apiSecret, String permissions, TwiAuthListener listener) {
         m_stage = stage;
         m_service = new ServiceBuilder()
-                .provider(TwitterApi.class)
+                .provider(TwitterApi.SSL.class)
                 .apiKey(appId)
                 .apiSecret(apiSecret)
-                .callback("oob")
                 .build();
         m_listener = listener;
         m_requestToken = null;
@@ -37,7 +36,6 @@ public class TwiAuth implements OAuthWebHelperListener {
     public void auth() {
         m_requestToken = m_service.getRequestToken();
         String authorizationUrl = m_service.getAuthorizationUrl(m_requestToken);
-        System.out.println(authorizationUrl);
 
         TwiOAuthWebHelper oauthHelper = new TwiOAuthWebHelper(m_stage, this);
         oauthHelper.auth("Twi Pin OAuth", authorizationUrl);
