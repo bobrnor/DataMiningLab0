@@ -3,8 +3,6 @@ package crawlers.twi;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-import java.util.ArrayList;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TwiCrawlerUserEntity {
     public Boolean contributors_enabled;

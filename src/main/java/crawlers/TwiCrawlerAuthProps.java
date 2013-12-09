@@ -1,8 +1,7 @@
 package crawlers;
 
-import crawlers.CrawlerAuthProps;
-import org.scribe.oauth.OAuthService;
 import org.scribe.model.Token;
+import org.scribe.oauth.OAuthService;
 
 /**
  * Created by pavel on 08/12/13.

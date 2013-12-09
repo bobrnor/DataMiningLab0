@@ -6,21 +6,9 @@ import crawlers.auths.VkAuth;
 import crawlers.auths.VkAuthListener;
 import crawlers.twi.TwiCrawler;
 import crawlers.vk.VkCrawler;
-import db.HibernateUtils;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import lsa.LSANormilizer;
-import lsa.LSAStemmer;
-import org.hibernate.HibernateException;
-import org.hibernate.SessionFactory;
-import org.hibernate.Session;
-import org.hibernate.Query;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.metadata.ClassMetadata;
-import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
-
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.

@@ -4,10 +4,9 @@ import crawlers.TwiCrawlerAuthProps;
 import javafx.stage.Stage;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.TwitterApi;
-import org.scribe.model.*;
+import org.scribe.model.Token;
+import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
-
-import java.util.Scanner;
 
 /**
  * Created with IntelliJ IDEA.

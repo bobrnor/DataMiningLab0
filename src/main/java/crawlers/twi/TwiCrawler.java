@@ -11,7 +11,6 @@ import db.HibernateUtils;
 import org.apache.commons.io.IOUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.scribe.exceptions.OAuthConnectionException;
 import org.scribe.model.OAuthRequest;

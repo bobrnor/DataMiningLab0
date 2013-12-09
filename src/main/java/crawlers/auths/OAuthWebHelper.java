@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 import org.w3c.dom.Document;
 
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 
 /**
