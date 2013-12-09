@@ -37,6 +37,7 @@ public class TwiAuth implements OAuthWebHelperListener {
     public void auth() {
         m_requestToken = m_service.getRequestToken();
         String authorizationUrl = m_service.getAuthorizationUrl(m_requestToken);
+        System.out.println(authorizationUrl);
 
         TwiOAuthWebHelper oauthHelper = new TwiOAuthWebHelper(m_stage, this);
         oauthHelper.auth("Twi Pin OAuth", authorizationUrl);
