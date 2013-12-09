@@ -39,6 +39,9 @@ public class Main extends Application implements VkAuthListener, TwiAuthListener
     public void authSucceded(CrawlerAuthProps authProps) {
         m_vkAuthProps = authProps;
 
+        VkCrawler vkCrawler = new VkCrawler();
+        vkCrawler.startCrawling(m_vkAuthProps, null);
+
         TwiAuth twiAuth = new TwiAuth(new Stage(), "jFxAP2VXOEokO2eI9k3azQ", "SOhBDSc3DU3OJvGnH8JGOQ83jMZxvkpWy6In7EY48", "", this);
         twiAuth.auth();
     }
@@ -50,9 +53,6 @@ public class Main extends Application implements VkAuthListener, TwiAuthListener
 
     @Override
     public void twiAuthSucceeded(TwiCrawlerAuthProps twiAuthProps) {
-        VkCrawler vkCrawler = new VkCrawler();
-        vkCrawler.startCrawling(m_vkAuthProps, null);
-
         TwiCrawler twiCrawler = new TwiCrawler();
         twiCrawler.startCrawling(twiAuthProps, null);
     }

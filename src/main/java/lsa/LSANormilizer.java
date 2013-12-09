@@ -54,7 +54,7 @@ public class LSANormilizer {
             Query query = session.createQuery("from DBDialogsEntity");
             List<DBDialogsEntity> dialogs = query.list();
             for (DBDialogsEntity dialog : dialogs) {
-                query = session.createQuery("from DBMessagesEntity where dialog.id = :dialog_id and fixedBody != NULL order by date asc").setInteger("dialog_id", dialog.getId());
+                query = session.createQuery("from DBMessagesEntity where dialog.id = :dialog_id and fixedBody is null order by date asc").setInteger("dialog_id", dialog.getId());
                 List<DBMessagesEntity> messages = query.list();
                 for (DBMessagesEntity message : messages) {
                     String clearBody = message.getBody().replaceAll("[\\s]|[^a-zA-Zа-яА-Я ]", " ").trim();
