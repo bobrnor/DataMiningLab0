@@ -222,6 +222,7 @@ public class TwiCrawler implements CrawlerInterface {
         ArrayList<TwiCrawlerGetTimelineTweet> getTweetsById(TreeSet<Long> ids) throws OAuthConnectionException, IOException, InterruptedException {
             ArrayList<TwiCrawlerGetTimelineTweet> tweets = new ArrayList<TwiCrawlerGetTimelineTweet>();
 
+            int count = 0;
             for (Long id : ids) {
                 String getPath = String.format(
                         kStatusShowPath,
@@ -245,6 +246,11 @@ public class TwiCrawler implements CrawlerInterface {
                     tweets.add(tweet);
                 } else {
                     System.out.println("=======> BAD STATUS ID: " + Long.toString(id));
+                }
+
+                count++;
+                if (count % 10 == 0) {
+                    System.out.println("Processed additional tweets count: " + Integer.toString(count));
                 }
 
                 long requestsRemaining = 0;
